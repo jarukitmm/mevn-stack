@@ -159,7 +159,17 @@ export default class Sample extends React.Component {
       error: null
     });
   }
-
+  logout(){
+    axios
+        .get(`http://localhost:3000/api/auth/logout`).then(res => {
+          console.log(res);
+          console.log(res.data);
+          this.onLoginSuccess(res.data.firstname);
+          this.setState({user:''});
+          this.setState({pss:''});
+          
+        });
+  }
 
 
   render() {
@@ -170,7 +180,7 @@ export default class Sample extends React.Component {
           <p>username: {this.state.user}</p>
           <p>password: {this.state.pss}</p>
           <br/>
-          <button className="RML-btn" onClick={this.logout}>Logout</button>
+          {/* <button className="RML-btn" onClick={this.logout}>Logout</button> */}
         </div>
         
 
@@ -321,25 +331,25 @@ export default class Sample extends React.Component {
               },
             ],
           }}
-          separator={{
-            label: "or"
-          }}
-          providers={{
-            facebook: {
-              config: facebookConfig,
-              onLoginSuccess: this.onLoginSuccess.bind(this),
-              onLoginFail: this.onLoginFail.bind(this),
-              inactive: isLoading,
-              label: "Continue with Facebook"
-            },
-            google: {
-              config: googleConfig,
-              onLoginSuccess: this.onLoginSuccess.bind(this),
-              onLoginFail: this.onLoginFail.bind(this),
-              inactive: isLoading,
-              label: "Continue with Google"
-            }
-          }}
+          // separator={{
+          //   label: "or"
+          // }}
+          // providers={{
+          //   facebook: {
+          //     config: facebookConfig,
+          //     onLoginSuccess: this.onLoginSuccess.bind(this),
+          //     onLoginFail: this.onLoginFail.bind(this),
+          //     inactive: isLoading,
+          //     label: "Continue with Facebook"
+          //   },
+          //   google: {
+          //     config: googleConfig,
+          //     onLoginSuccess: this.onLoginSuccess.bind(this),
+          //     onLoginFail: this.onLoginFail.bind(this),
+          //     inactive: isLoading,
+          //     label: "Continue with Google"
+          //   }
+          // }}
         />
         {loggedIn}
       </div>

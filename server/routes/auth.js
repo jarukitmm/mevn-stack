@@ -45,5 +45,10 @@ router.post('/register', function(req, res) {
       }
     });
   });
+  router.get('/logout',function(res,req){
+    // req.logout();
+    console.log('ddd: '+req.body)
+    // res.send('Null');
+  });
 
   module.exports = router;
