@@ -5,13 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var ejs = require('ejs');
+var flash = require('connect-flash');
 var cors = require('cors');
+var passport = require('passport');
+var session = require('express-session');
 //router
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var productsRouter = require('./routes/products');
-var authRouter = require('./routes/auth');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+// var productsRouter = require('./routes/products');
+// var authRouter = require('./routes/auth');
 
 var app = express();
 //database set up
@@ -19,7 +21,8 @@ mongoose.connect('mongodb://user:user12345@ds251112.mlab.com:51112/vuedb');
 app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,12 +35,25 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+//cookie-session
+app.use(session({
+ secret:'secret_key',
+ resave: false,
+ saveUninitialized: true
+}));
+app.use(flash());
+//passport
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 //route
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/products', productsRouter);
-app.use('/api/auth', authRouter);
+require('./routes/users')(app);
+require('./routes/index')(app);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+// app.use('/products', productsRouter);
+// app.use('/api/auth', authRouter);
 
 //app.use('/products',productRouter);
 

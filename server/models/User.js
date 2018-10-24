@@ -1,51 +1,68 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs');
+var mongoose = require('mongoose');
+var crypto = require('crypto');
+var Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    firstname:{tpye:String},
-    lastname:{tpye:String},
-    username:{type:String,unique:true,index:true},
-    password:{type:String},
-    email: {type: String,match:/.+\@.+\.+/},
-    dateOfBirth:{type:Date}
-})
-
+var UserSchema = new Schema({
+    firstname: String,
+    lastname: String,
+    username: {
+        type: String,
+        unique: true,
+        required: 'Username is required',
+        trim: true
+    },
+    email: {
+        type: String,
+        index: true,
+        match: /.+\@.+\.+/
+    },
+    password: {
+        type: String,
+        required: 'Password required'
+    },
+    usertype: {
+        type: String,
+        required: 'Usertype is required',
+        default:'customer'
+    },
+    dateOfbirth: Date,
+    salt: String,
+    provider: {
+        type: String,
+        required: 'Provider is required'
+    },
+    providerId: String,
+    providerData: {}
+});
 UserSchema.pre('save', function (next) {
-    var user = this;
-    if (this.isModified('password') || this.isNew) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, null, function (err, hash) {
-                if (err) {
-                    return next(err);
-                }
-                user.password = hash;
-                next();
-            });
-        });
-    } else {
-        return next();
+    if (this.password) {
+        this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+        this.password = this.hashPassword(this.password);
     }
+    next();
 });
 
+UserSchema.methods.hashPassword = function (password) {
+    return crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha512').toString('base64');
+};
 
-UserSchema.methods.comparePassword = function (passw, cb) {
-    bcrypt.compare(passw, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
+UserSchema.methods.authenticate = function (password) {
+    return this.password === this.hashPassword(password);
+};
+
+UserSchema.statics.findUniqueUsername = function(username,suffix,callback){
+    var _this = this;
+    var possibleUsername = username + (suffix||'');
+    _this.findOne({
+        username:possibleUsername
+    },function(err,user){
+        if(!err){
+            if(!user) callback(possibleUsername);
+            else return _this.findUniqueUsername(username,(suffix||0)+1,callback)
+        }else{
+            callback(null);
         }
-        cb(null, isMatch);
     });
 };
 
-let sch = null;
-try {
-    sch = mongoose.model('User', UserSchema);
-    } catch (e) {
-    sch = mongoose.model('User');
-    }
-    
-module.exports = sch;
+module.exports = mongoose.model('User', UserSchema);
