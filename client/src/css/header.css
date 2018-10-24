@@ -262,3 +262,7 @@ nav.navbar {
       fill: #fff;
     }
   }
+
+  .MuiAppBar-colorPrimary-018{
+    background-color: rgb(224, 157, 31);
+  }

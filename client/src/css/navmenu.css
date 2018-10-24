@@ -1,0 +1,27 @@
+.menutab{
+    width: 100%;
+}
+
+.menutab .nav-tabs{
+    margin-top: 20px;
+    border-bottom: none;
+    float: left;
+    /* width: 100%; */
+}
+
+.menutab .nav-link{
+    color: black;
+    text-decoration: none;
+    background-color: rgb(250, 194, 41);
+    border-radius: 30px;
+    border-color: rgb(250, 194, 41);
+}
+
+.menutab .nav-link:hover{
+    color:white;
+    text-decoration: none;
+    background-color: grey;
+    border-color: grey;
+    box-shadow: 0px;
+}
+
