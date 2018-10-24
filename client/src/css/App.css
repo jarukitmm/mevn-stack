@@ -26,3 +26,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.cardzone{
+  /* width: 100%; */
+  align-items: flex-start;
+}
+
+.Container{
+  
+}
