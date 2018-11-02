@@ -16,7 +16,7 @@ export default class Carousel extends Component {
       slidesToScroll: 3
     };
     return (
-      <div class="carouselslide" style={{marginTop: '3.8%'}}>
+      <div class="carouselslide">
         {/* <h2> Carousel Multiple items </h2> */}
         <Slider {...settings}>
           <div>

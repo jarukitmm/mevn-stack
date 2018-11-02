@@ -194,7 +194,7 @@ export default class Sample extends React.Component {
     const isLoading = this.state.loading;
 
     return (
-      <div>
+      <div class="signin_signout_button">
 
         <button
           className="RML-btn"

@@ -1,12 +1,15 @@
 .menutab{
+    margin-top: 20px;
     width: 100%;
+    height: min-content;
+    /* background-color: red; */
 }
 
 .menutab .nav-tabs{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border-bottom: none;
-    float: left;
-    /* width: 100%; */
+    width: 100%;
+    /* background-color: pink; */
 }
 
 .menutab .nav-link{
@@ -24,4 +27,5 @@
     border-color: grey;
     box-shadow: 0px;
 }
+
 
