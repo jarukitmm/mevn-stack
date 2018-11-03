@@ -43,7 +43,7 @@ export default class Sample extends React.Component {
     } else {
       this.onLoginSuccess('form');
       axios
-      .post(`http://localhost:3000/api/auth/login`, {user})
+      .post(`http://localhost:3000/api/auth/users/login`, {user})
       .then(res=>{
         console.log(res);
         console.log(res.data);
@@ -73,7 +73,7 @@ export default class Sample extends React.Component {
       console.log('down')
       // this.onLoginSuccess('form');
       axios
-        .post(`http://localhost:3000/api/auth/register`, {
+        .post(`http://localhost:3000/api/auth/users/signup`, {
           user
         })
         .then(res => {
@@ -161,7 +161,7 @@ export default class Sample extends React.Component {
   }
   logout(){
     axios
-        .get(`http://localhost:3000/api/auth/logout`).then(res => {
+        .get(`http://localhost:3000/api/auth/users/logout`).then(res => {
           console.log(res);
           console.log(res.data);
           this.onLoginSuccess(res.data.firstname);
