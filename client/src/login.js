@@ -18,8 +18,7 @@ export default class Sample extends React.Component {
       error: null,
       initialTab: null,
       recoverPasswordSuccess: null,
-      user:'',
-      pss:''
+      user:null
     };
 
   }
@@ -46,13 +45,14 @@ export default class Sample extends React.Component {
     } else {
       this.onLoginSuccess('form');
       axios
-      .post(`http://localhost:3000/api/auth/users/login`, {user})
+      .post(`http://localhost:3000/api/auth/users/login`, {username:user.username,password:user.password})
       .then(res=>{
         console.log(res);
         console.log(res.data);
         // this.onLoginSuccess(res.data.firstname);
-          this.setState({user:res.data.username});
-          this.setState({pss:res.data.password});
+          // this.setState({user:res.data.username});
+          // this.setState({pss:res.data.password});
+        this.setState({user:res.data.user});
       })
     }
   }
@@ -81,10 +81,10 @@ export default class Sample extends React.Component {
         })
         .then(res => {
           console.log(res);
-          console.log(res.data);
-          this.onLoginSuccess(res.data.firstname);
-          this.setState({user:res.data.username});
-          this.setState({pss:res.data.password});
+          console.log(res.data.user);
+          // this.onLoginSuccess(res.data.firstname);
+          this.setState({user:res.data.user});
+          // this.setState({pss:res.data.password});
           
         })
     }
@@ -165,12 +165,11 @@ export default class Sample extends React.Component {
   
   logout(){
     axios
-        .get(`http://localhost:3000/api/auth/users/logout`).then(res => {
+        .post(`http://localhost:3000/api/auth/users/logout`).then(res => {
           console.log(res);
           console.log(res.data);
-          this.onLoginSuccess(res.data.firstname);
-          this.setState({user:''});
-          this.setState({pss:''});
+          window.location.reload();
+          // this.setState({user:''});
           
         });
   }
@@ -193,10 +192,10 @@ export default class Sample extends React.Component {
     //   </div>;
 
     const isLoading = this.state.loading;
-
-    return (
+    console.log('state user : \n '+JSON.stringify(this.state.user));
+    if(this.state.user == null){
+      return (
       <div class="signin_signout_button">
-
         <button
           className="RML-btn"
           onClick={() => this.openModal('login')}
@@ -354,5 +353,17 @@ export default class Sample extends React.Component {
         {/* {loggedIn} */}
       </div>
     )
+    }else{
+
+      return(
+      <div class="signin_signout_button">
+      {this.state.user.username}
+      <button className="RML-btn" onClick={this.logout}>
+      Logout
+      </button>
+      </div>
+      )
+    }
+    
   }
 }

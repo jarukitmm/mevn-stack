@@ -12,7 +12,7 @@ module.exports = function (app) {
         failureFlash: true
       }),
       function (req, res) {
-        res.json({ user: req.user });
+        res.json({user:req.user});
         // res.json({message:'hello'});
       }
     );
