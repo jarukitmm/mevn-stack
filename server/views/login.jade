@@ -6,10 +6,10 @@ html
     each msg in messages
       div.flash
         = msg
-    form(name='login',method='POST',action='login')
+    form(name='addproduct',method='POST',action='product')
       div
-        label(for='username') Username
-        input(name='username' , type='text', placeholder='username')
+        label(for='id') Username
+        input(name='_id' , type='text', placeholder='')
       div
         label(for='password') Password
         input(name='password', type='password',placeholder='password')
