@@ -18,8 +18,7 @@ export default class Sample extends React.Component {
       error: null,
       initialTab: null,
       recoverPasswordSuccess: null,
-      user:'',
-      pss:''
+      user:null
     };
 
   }
@@ -46,13 +45,14 @@ export default class Sample extends React.Component {
     } else {
       this.onLoginSuccess('form');
       axios
-      .post(`http://localhost:3000/api/auth/login`, {user})
+      .post(`http://localhost:3000/api/auth/users/login`, {username:user.username,password:user.password})
       .then(res=>{
         console.log(res);
         console.log(res.data);
         // this.onLoginSuccess(res.data.firstname);
-          this.setState({user:res.data.username});
-          this.setState({pss:res.data.password});
+          // this.setState({user:res.data.username});
+          // this.setState({pss:res.data.password});
+        this.setState({user:res.data.user});
       })
     }
   }
@@ -64,6 +64,7 @@ export default class Sample extends React.Component {
     user.lastname = document.querySelector('#lastname').value;
     user.username = document.querySelector('#username').value;
     user.password = document.querySelector('#password').value;
+    user.confirm_password = document.querySelector('#confirm_password').value;
     user.email = document.querySelector('#email').value;
     user.dateOfBirth = document.querySelector('#dateOfBirth').value;
     console.log('firstname : '+user.firstname);
@@ -76,19 +77,19 @@ export default class Sample extends React.Component {
       console.log('down')
       // this.onLoginSuccess('form');
       axios
-        .post(`http://localhost:3000/api/auth/register`, {
+        .post(`http://localhost:3000/api/auth/users/signup`, {
           user
         })
         .then(res => {
           console.log(res);
-          console.log(res.data);
-          this.onLoginSuccess(res.data.firstname);
-          this.setState({user:res.data.username});
-          this.setState({pss:res.data.password});
+          console.log(res.data.user);
+          // this.onLoginSuccess(res.data.firstname);
+          this.setState({user:res.data.user});
+          // this.setState({pss:res.data.password});
           
         })
     }
-    }
+  }
 
   onRecoverPassword() {
     console.log('__onFotgottenPassword__');
@@ -162,14 +163,14 @@ export default class Sample extends React.Component {
       error: null
     });
   }
+  
   logout(){
     axios
-        .get(`http://localhost:3000/api/auth/logout`).then(res => {
+        .post(`http://localhost:3000/api/auth/users/logout`).then(res => {
           console.log(res);
           console.log(res.data);
-          this.onLoginSuccess(res.data.firstname);
-          this.setState({user:''});
-          this.setState({pss:''});
+          window.location.reload();
+          // this.setState({user:''});
           
         });
   }
@@ -192,10 +193,10 @@ export default class Sample extends React.Component {
     //   </div>;
 
     const isLoading = this.state.loading;
-
-    return (
+    console.log('state user : \n '+JSON.stringify(this.state.user));
+    if(this.state.user == null){
+      return (
       <div class="signin_signout_button">
-
         <button
           className="RML-btn"
           onClick={() => this.openModal('login')}
@@ -209,10 +210,6 @@ export default class Sample extends React.Component {
         >
           Sign up
         </button>
-
-        
-
-        
 
         <ReactModalLogin
           visible={this.state.showModal}
@@ -357,5 +354,17 @@ export default class Sample extends React.Component {
         {/* {loggedIn} */}
       </div>
     )
+    }else{
+
+      return(
+      <div class="signin_signout_button">
+        <div class="showusername">{this.state.user.username}</div>
+      <button className="RML-btn" onClick={this.logout}>
+      Logout
+      </button>
+      </div>
+      )
+    }
+    
   }
 }

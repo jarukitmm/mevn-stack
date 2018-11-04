@@ -34,24 +34,21 @@ exports.renderSignup = function(req,res){
 };
 
 exports.signup = function(req,res,next){
-    console.log(req.body);
+    console.log(req.body.user);
     if(!req.user){
-        var user = new User(req.body);
-        user.firstname = 'firstname';
+        var user = new User(req.body.user);
         user.provider = 'local';
         console.log(user);
         user.save(function(err){
             if(err){
                 var message = getErrorMessage(err);
-
                 req.flash('error',message);
-                return res.redirect('/users/signup');
+                return res.redirect('/');
             } 
-
             req.login(user,function(err){
                 console.log('hello');
                 if(err) return next(err);
-                return res.redirect('/');
+                return res.json({user});
             });
         });
 

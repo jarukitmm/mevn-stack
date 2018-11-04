@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
     cost : Number,
     category : String,
     image : String,
+    type : {type:[String]},
     description : String
 },{_id:false})
 
