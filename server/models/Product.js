@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    _id :{type:Number,unique:true,index:true},
     name : String,
-    quantity : Number,
+    quantity : {type:Number, default:1},
     cost : Number,
-    category : String,
+    subject : String,
+    level:String,
     image : String,
-    type : {type:[String]},
     description : String
-},{_id:false})
+})
 
 module.exports = mongoose.model('Product',ProductSchema);

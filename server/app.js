@@ -50,6 +50,7 @@ app.use(passport.session());
 //route
 require('./routes/users')(app);
 require('./routes/index')(app);
+require('./routes/products')(app);
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 // app.use('/products', productsRouter);
