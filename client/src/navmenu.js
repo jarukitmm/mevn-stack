@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 import './css/navmenu.css';
+import SearchBar from 'material-ui-search-bar'
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -58,6 +59,14 @@ export default class Example extends React.Component {
           <NavItem>
             <NavLink href="#">สังคมศึกษา</NavLink>
           </NavItem>
+          <SearchBar
+      onChange={() => console.log('onChange')}
+      onRequestSearch={() => console.log('onRequestSearch')}
+      style={{
+        margin: '0 auto',
+        maxWidth: 800
+      }}
+    />
         </Nav>
       </div>
     );
