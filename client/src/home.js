@@ -17,12 +17,7 @@ export default class Home extends Component {
         <Navmenu/>
         <div class="cardzone" style={{margin: '0px',marginTop: '1em'}}>
         <flex-container>
-          <Card/><Card/>
-          <Card/><Card/>
-          <Card/><Card/>
-          <Card/><Card/>
-          <Card/><Card/>
-          <Card/><Card/>
+          <Card/>
         </flex-container>
           
         </div>

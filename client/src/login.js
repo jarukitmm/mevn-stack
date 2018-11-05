@@ -64,7 +64,6 @@ export default class Sample extends React.Component {
     user.lastname = document.querySelector('#lastname').value;
     user.username = document.querySelector('#username').value;
     user.password = document.querySelector('#password').value;
-    user.confirm_password = document.querySelector('#confirm_password').value;
     user.email = document.querySelector('#email').value;
     user.dateOfBirth = document.querySelector('#dateOfBirth').value;
     console.log('firstname : '+user.firstname);
