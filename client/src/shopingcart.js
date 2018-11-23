@@ -33,7 +33,7 @@ componentDidMount(){
                       <Td>{index+1}</Td>
                       <Td><img style={{width: '10em', height: '10em'}} src={product.image}></img></Td>
                       <Td>{product.name}</Td>
-                      <Td><p>{product.description}</p></Td>
+                      <Td>{product.description}</Td>
                       <Td>{product.subject}</Td>
                       <Td>{product.level}</Td>
                       <Td>{product.cost}</Td>

@@ -1,8 +1,15 @@
 import React from 'react';
 import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 import './css/navmenu.css';
-import SearchBar from 'material-ui-search-bar'
+import SearchIcon from '@material-ui/icons/Search';
+import Searchbar from './searchbar.js';
+import {Route} from 'react-router-dom';
+import Shopingcart from './shopingcart.js'
 
+// props: {
+//   setpage
+// }
+  
 export default class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -19,13 +26,19 @@ export default class Example extends React.Component {
     });
   }
 
+  changepage(val){
+    // this.props.setpage(e.target.id)
+    this.props.setpage(val)
+  }
 
   render() {
     return (
+      // <div>
       <div class="menutab">
         <Nav tabs>
+          <Searchbar/>
           <NavItem>
-            <NavLink href="#">ทั้งหมด</NavLink>
+            <NavLink onClick = {() => this.changepage('ทั้งหมด')} href="#">ทั้งหมด</NavLink>
           </NavItem>
           <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle nav caret>
@@ -44,31 +57,26 @@ export default class Example extends React.Component {
             </DropdownMenu>
           </Dropdown>
           <NavItem>
-            <NavLink href="#">วิทยาศาสตร์</NavLink>
+            <NavLink onClick = {() => this.changepage('วิทยาศาสตร์')} /*id="1"*/ href="#">วิทยาศาสตร์</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">คณิตศาสตร์</NavLink>
+            <NavLink onClick = {() => this.changepage('คณิตศาสตร์')} href="#">คณิตศาสตร์</NavLink>
             {/* <NavLink disabled href="#">Disabled Link</NavLink> */}
           </NavItem>
           <NavItem>
-            <NavLink href="#">ภาษาไทย</NavLink>
+            <NavLink onClick = {() => this.changepage('ภาษาไทย')} href="#">ภาษาไทย</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">ภาษาอังกฤษ</NavLink>
+            <NavLink onClick = {() => this.changepage('ภาษาอังกฤษ')} href="#">ภาษาอังกฤษ</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">สังคมศึกษา</NavLink>
+            <NavLink onClick = {() => this.changepage('ชีววิทยา')} href="#">ชีววิทยา</NavLink>
           </NavItem>
-          <SearchBar
-      onChange={() => console.log('onChange')}
-      onRequestSearch={() => console.log('onRequestSearch')}
-      style={{
-        margin: '0 auto',
-        maxWidth: 800
-      }}
-    />
+          {/* <Searchbar/> */}
         </Nav>
       </div>
+      // <Route path="/shopingcart" component="Shopingcart"/>
+      // </div>
     );
   }
 }

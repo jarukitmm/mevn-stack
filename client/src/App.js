@@ -12,7 +12,9 @@ import Navbar from './navbar.js';
 import Navmenu from './navmenu.js';
 import Shopingcart from './shopingcart.js';
 import Productcard from './productcard.js';
-
+import Searchbar from './searchbar.js';
+import Slidingpane from './slidingpane.js';
+ 
 import { Route } from 'react-router-dom'
 
 class App extends Component {
@@ -29,6 +31,8 @@ class App extends Component {
           <Route path="/shopingcart" component={Shopingcart}/>
           <Route path="/productcard" component={Productcard} />
           <Route path="/footer" component={Footer} />
+          <Route path="/searchbar" component={Searchbar} />
+          <Route path="/slidingpane" component={Slidingpane} />
         </div>
         <Footer style={{marginTop: '20em'}}/>
       </div>

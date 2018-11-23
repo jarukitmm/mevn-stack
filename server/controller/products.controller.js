@@ -14,3 +14,11 @@ exports.allproduct = function(req,res){
         else res.json({product:products});
     })
 }
+
+exports.searchproduct = function(req,res){
+    console.log(req.body);
+    Product.find({"name":/req.body/},function(err,products){
+        if(err)res.json({products:'',msg:'error searh'});
+        else res.json({products:products});
+    })
+}
