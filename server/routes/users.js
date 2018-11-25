@@ -17,4 +17,5 @@ module.exports = function (app) {
       }
     );
   app.post('/api/auth/users/logout', user.logout);
+  app.post('/api/auth/users/editprofile',user.editprofile)
 };

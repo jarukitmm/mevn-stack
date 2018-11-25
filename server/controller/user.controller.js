@@ -74,6 +74,14 @@ exports.logout = function(req,res){
     res.redirect('/');
 }
 
+exports.editprofile = function(req,res){
+    console.log(req.body);
+    User.findOneAndUpdate({"_id":ObjectId(req.user.id)},req.body,function(err, user){
+        if (err) return res.send(err);
+        return res.json({user:user});
+    });
+}
+
 exports.saveOAuthUserProfile = function(req,profile,done){
     User.findOne({
         provider:profile.provider,

@@ -15,13 +15,8 @@ export default class Home extends Component {
     super(props);
     this.cardpage = this.cardpage.bind(this)
     this.state = {
-      page: 'ทั้งหมด'
+    
     };
-  }
-
-  cardpage =(p)=> {
-    this.setState({ page: p })
-    console.log(this.state)
   }
 
   render() {
@@ -32,7 +27,27 @@ export default class Home extends Component {
         {/* <p>{this.state.page}</p> */}
         <div class="cardzone" style={{ margin: '0px', marginTop: '1em' }}>
           <flex-container>
-            <Card page={this.state.page} />
+          <Card>
+                <div class="row">
+                <div class="col" id="col_l" style={{marginTop: '10px'}}>
+                  <img src={product.image} alt="Card image cap" />
+                </div>
+                <div class="col" id="col_r">
+                  <CardBody>
+                    <CardTitle>{product.name}</CardTitle>
+                    <CardSubtitle>{product.description}</CardSubtitle>
+                  </CardBody>
+                  <CardBody>
+                    <CardText>{"ระดับชั้น : "+product.level}</CardText>
+                  </CardBody>
+                  <CardDeck>
+                    <CardLink id="price" href="#">{product.cost+' บาท'}</CardLink>
+                    <CardLink id="add_to_cart" href="#">Add to Cart</CardLink>
+                  </CardDeck>
+                  {/* <CardSubtitle><CardLink href="#">Add to Cart</CardLink></CardSubtitle> */}
+                </div>
+                </div>
+              </Card>
           </flex-container>
         </div>
         {/* <Footer/> */}

@@ -2,9 +2,11 @@
 import React from 'react';
 import ReactModalLogin from 'react-modal-login';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 // import {facebookConfig, googleConfig} from "./social-config";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/login.css';
+
 
 export default class Sample extends React.Component {
 
@@ -18,7 +20,7 @@ export default class Sample extends React.Component {
       error: null,
       initialTab: null,
       recoverPasswordSuccess: null,
-      user:null
+      user: null
     };
 
   }
@@ -43,17 +45,26 @@ export default class Sample extends React.Component {
         error: true
       })
     } else {
-      this.onLoginSuccess('form');
+      // this.onLoginSuccess('form');
       axios
       .post(`http://localhost:3000/api/auth/users/login`, {username:user.username,password:user.password})
-      .then(res=>{
+      .then((res)=>{ 
+        console.log('status '+ res);
         console.log(res);
         console.log(res.data);
         // this.onLoginSuccess(res.data.firstname);
           // this.setState({user:res.data.username});
           // this.setState({pss:res.data.password});
         this.setState({user:res.data.user});
+        console.log('check '+this.state.user)
+        this.props.passtoparent(this.state.user)
+        
       })
+      .catch((error)=>{
+        // console.log(error.response.status)
+        this.onLoginFail('form',error.response.status)
+      })
+      
     }
   }
 
@@ -130,8 +141,9 @@ export default class Sample extends React.Component {
   }
 
   onLoginFail(method, response) {
-
+    
     this.setState({
+      showModal: true,
       loading: false,
       error: response
     })
@@ -172,6 +184,7 @@ export default class Sample extends React.Component {
           // this.setState({user:''});
           
         });
+  
   }
 
 
@@ -212,6 +225,7 @@ export default class Sample extends React.Component {
 
         <ReactModalLogin
           visible={this.state.showModal}
+          onLoginFail={this.onLoginFail}
           onCloseModal={this.closeModal.bind(this)}
           loading={isLoading}
           initialTab={this.state.initialTab}
@@ -316,6 +330,42 @@ export default class Sample extends React.Component {
                 inputClass: 'RML-form-control',
                 id: 'dateOfBirth',
                 name: 'dateOfBirth'
+              },
+              {
+                containerClass: 'RML-form-group',
+                label: 'Creditcard Number',
+                type: 'number',
+                inputClass: 'RML-form-control',
+                id: 'creditcardnumber',
+                name: 'creditcardnumber',
+                placeholder: 'CreditCard Number'
+              },
+              {
+                containerClass: 'RML-form-group',
+                label: 'Expiration Month',
+                type: 'number',
+                inputClass: 'RML-form-control',
+                id: 'expmonth',
+                name: 'expmonth',
+                placeholder: 'Expiration month'
+              },
+              {
+                containerClass: 'RML-form-group',
+                label: 'Expiration Year',
+                type: 'number',
+                inputClass: 'RML-form-control',
+                id: 'expyear',
+                name: 'expyear',
+                placeholder: 'Expiration year'
+              },
+              {
+                containerClass: 'RML-form-group',
+                label: 'CCV number',
+                type: 'password',
+                inputClass: 'RML-form-control',
+                id: 'ccvnum',
+                name: 'ccvnum',
+                placeholder: 'CCV number'
               }
             ],
             recoverPasswordInputs: [
@@ -357,9 +407,11 @@ export default class Sample extends React.Component {
 
       return(
       <div class="signin_signout_button">
-        <div class="showusername">{this.state.user.username}</div>
+        <div class="showusername">
+          <Link to="/profile">{this.state.user.username}</Link> 
+        </div>
       <button className="RML-btn" onClick={this.logout}>
-      Logout
+        Logout
       </button>
       </div>
       )

@@ -5,6 +5,8 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import { formatMs } from '@material-ui/core/styles/transitions';
 import './css/shopingcart.css';
 import axios from 'axios';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 export default class shopingcart extends React.Component{
   constructor(props){
@@ -12,7 +14,7 @@ export default class shopingcart extends React.Component{
     super(props);
 
     this.state = {
-      data : null
+      user : null
     };
   }
 
@@ -20,8 +22,12 @@ export default class shopingcart extends React.Component{
     // this.setState({data:res.data} = axios.post(`http://localhost:3000/api/product`);
   }
 
+  onDeleteClick=()=>{
+    
+  }
+
 componentDidMount(){
-    console.log('call createtable');
+    // console.log('call createtable');
     fetch('http://localhost:3000/api/products/allproduct')
           .then(res=>{
             return res.json();
@@ -37,6 +43,12 @@ componentDidMount(){
                       <Td>{product.subject}</Td>
                       <Td>{product.level}</Td>
                       <Td>{product.cost}</Td>
+                      <IconButton
+                        aria-label="Delete"
+                        // onClick={this.onDeleteClick.bind(this, _id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </Tr>
                   )
                 })

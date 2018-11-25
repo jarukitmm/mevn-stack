@@ -7,7 +7,7 @@ import Card from './card.js';
 import Footer from './footer.js';
 import Navbar from './navbar.js';
 import Navmenu from './navmenu.js';
-import Shopingcart from './shopingcart.js';
+// import Shopingcart from './product.js';
 
 export default class Home extends Component {
 
